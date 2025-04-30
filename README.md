@@ -2,82 +2,117 @@
 
 ## Project Introduction
 
-In this project, we will be training and testing our own custom Large Language Model (LLM) from scratch. The main purpose
-of this LLM is to act as a study aid for the course content in the AIFirst (ECE2806) course. Therefore, given any question on
-Machine Learning topics, the LLM should provide a reasonable output that relates to different ML tasks. This repo contains the 
-code for training and inference of your model. Note that you are free to imbue this project with your own creative solutions.
+This repository contains the implementation and analysis for the AI First (ECE2806) final project by Zewei Zhang at Georgia Institute of Technology. The project involves training and fine-tuning a custom Large Language Model (LLM) from scratch to serve as a study aid for the AI First course, answering Machine Learning-related questions. The focus is on dataset creation, hyperparameter optimization, and task-specific fine-tuning, with an emphasis on analyzing the impact of these processes on model performance. Creative modifications to the provided starter code are implemented to enhance the LLM's capabilities.
 
 ## Project Constraints
-It is possible to generate a model within this github and then take pre-trained weights from a library like huggingface
-to instantly get a model that will perform this task very well. Obviously, training
-models from scratch will result in worse performing models compared to the open source weights that can be found online. However,
-the major point of this project is go through the process of data pre-processing, training, hyperparameter tuning, and inference
-on your own. The analysis of this process will compose most of your report. 
-
-Note that we are not interested in the performance of your model. We are interested in how the analysis of your performance led to
-different decisions and choices you make within this project. In other words, your grade depends on analysis, not on performance.
-Interesting failures will make a better report than performing well on models that you got from the internet.
+While pre-trained weights from libraries like Hugging Face could yield high-performing models, this project prioritizes the process of data preprocessing, training, hyperparameter tuning, and inference from scratch. The evaluation focuses on the analysis of decisions and outcomes, not the absolute performance of the model. Insightful analysis of challenges and failures is valued over using pre-trained models, and all training must be conducted independently.
 
 ## Directory Information
 
-Note the following features and conventions of this github repository:
-
-* Model files should be saved in the models/ directory.
-* The implementation of our GPT model is in the model.py file.
-* Test and train data should be shaved in the test_data/ and train_data/ directories.
-  * All data should be in the format of a single .txt file.
-  * Test data will be provided in the form of test_answer_#.txt, test_prompt_#.txt, and test_response_#.txt.
-    * All testing data will be provided by the instructors and will be composed of common machine learning questions that you learned in this course.
-    * test_prompt_#.txt will be the input you give your LLM.
-    * test_answer_#.txt will be the answer expected based on the corresponding prompt.
-    * test_response_#.txt is the output file that your LLM should save everything to.
-    * The inference code will then compute a metric to compare between the answer and response files to measure the quality of your LLM.
-* There are two training files and two testing files.
-  * Two of the files are based on the base GPT model itself.
-  * Two of the files are copies using an additional tokenizer block.
-* We provide a jupyter notebook called tutorial_basic.ipynb that places all the main points of the code together for your exploratory convenience. 
-* utils.py contains helper functions that you may or may not use.
-* You are free to add/modify any part of your code to suit the needs of your project.
+The repository follows these conventions:
+Model Files: Saved in models/ (e.g., pretrain.pth for pre-trained model, finetuned_model.pth for fine-tuned model).
+Model Implementation: Located in model.py, containing the GPT model architecture.
+Data Directories:
+train_data/: Contains training datasets (Dataset.txt, Dataset_improved.txt, QA.txt) in .txt format.
+test_data/: Contains instructor-provided test files:
+test_prompt_#.txt: Input prompts for the LLM.
+test_answer_#.txt: Expected answers for prompts.
+test_response_#.txt: Model-generated outputs.
+Training and Testing Scripts:
+training_base.py, testing_base.py: Base scripts for the GPT model.
+training_tokenizer.py, testing_tokenizer.py: Scripts with tokenizer block for Part 1.
+training_tokenize_Part2.py: Custom fine-tuning script for Part 2.
+Additional Files:
+tutorial_basic.ipynb: Jupyter notebook for code exploration.
+utils.py: Helper functions for training and evaluation.
+Customization: The code has been modified to support GPT2 tokenization, Adam optimizer, and QA-format fine-tuning, with new scripts added for Part 2.
 
 ## Code Usage
 
-1. Go to the training_base.py file.
-2. Modify the argparse options to suit the hyperparameters of your experiment.
-3. Run the following command on the command line:
-```
-python3 training_base.py
-```
-4. Navigate to the corresponding testing file. In this case, that would be testing_base.py
-5. Modify the argparse file in this file. Note that testing file must specify the path to the saved model checkpoint that you generated in Step 2.
-```
-python3 testing_base.py
-```
-6. Record the performance on your testing data.
+Part 1: Pre-Training
 
+
+Place Dataset.txt (344KB, from AI 2806 slides) and Dataset_improved.txt (515KB, enhanced with Wikipedia content) in train_data/.
+
+Modify training_tokenizer.py to set hyperparameters:
+parser.add_argument('--max_iters', type=int, default=5000)
+parser.add_argument('--tokenization', type=str, default='gpt2')
+parser.add_argument('--optimizer', type=str, default='adam')
+parser.add_argument('--dataset', type=str, default='train_data/Dataset_improved.txt')
+Run training:
+python3 training_tokenizer.py
+Test the model:
+python3 testing_tokenizer.py --model_path models/pretrain.pth
+Evaluate results in test_data/test_response_#.txt using Levenshtein distance and ROUGE scores.
+
+Part 2: Fine-Tuning
+Place QA.txt (QA-formatted dataset) in train_data/.
+Modify training_tokenize_Part2.py for fine-tuning:
+parser.add_argument('--lr', type=float, default=1e-5)
+parser.add_argument('--wd', type=float, default=0.25)
+parser.add_argument('--model_path', type=str, default='models/pretrain.pth')
+parser.add_argument('--dataset', type=str, default='train_data/QA.txt')
+Run fine-tuning:
+python3 training_tokenize_Part2.py
+Test the fine-tuned model:
+python3 testing_tokenizer.py --model_path models/finetuned_model.pth
+Results are averaged over 10 runs to reduce randomness.
 ## Project Ideas
-The above Code Usage is simple. However, the complexity of the project has a lot to do with the analysis you can perform as well as the alterations you
-can do on top of our basic setup.
-Possible ideas include:
-* Implement your own custom datasets.
-  * For this project, you will almost certainly have to find a data source to input into your model.
-  * Describing how you mined the data can be an interesting part of the report.
-  * This could be as simple as inputting data into a large txt file.
-* Perform analyses of performance on specific prompts as hyperparameter changes are made. This would be similar to your studios where you generate
-plots of observed changes as different paramters are varied. These parameters could include:
-  * Block Size
-  * Batch Size
-  * Learning Rate
-  * Optimizer
-  * Number of Heads or Layers in the GPT model.
-  * etc.
-* Incorporate your own custom tokenizer.
-* Visualize the attention weights/Matrices for different input prompts.
-* Generate curves of loss, gradient, training, and accuracy values over the course of training.
-* Possible implementation of custom loss functions, optimizers, or training procedures.
-* etc.
+The project extends the starter code with the following implementations and analyses:
+
+
+
+
+
+Custom Datasets:
+
+
+
+
+
+Dataset.txt: Converted from 18 AI 2806 course slides (344KB).
+
+
+
+Dataset_improved.txt: Augmented with Wikipedia content for key concepts (515KB).
+
+
+
+QA.txt: Reformatted Dataset_improved.txt into QA format for fine-tuning.
+
+
+
+Hyperparameter Analysis:
+
+
+
+
+
+Part 1: Tested max_iters (1000, 5000, 10000, 15000), tokenization (BPE vs. GPT2), and optimizers (SGD vs. Adam). Optimal: max_iters=5000, GPT2, Adam.
+
+
+
+Part 2: Tested five learning rate and weight decay combinations:
+
+
+
+
+
+lr=3e-4, wd=0.1
+lr=1e-4, wd=0.15
+lr=5e-5, wd=0.2
+lr=1e-5, wd=0.25 (optimal)
+lr=5e-6, wd=0.3
+Custom Tokenizer: Implemented GPT2 tokenization, outperforming BPE due to better semantic capture.
+Performance Visualizations:
+Line charts for Levenshtein distance and ROUGE scores over iterations.
+Bar charts comparing pre-trained and fine-tuned models across metrics.
+Evaluation Metrics:
+Levenshtein distance for character-level alignment.
+ROUGE-1, ROUGE-2, ROUGE-L F1 scores for text similarity.
+Fine-Tuning Strategy: Developed training_tokenize_Part2.py to fine-tune on QA-formatted data, validating hypotheses on task adaptability and generalization.
 
 ## Acknowledgements/Resources
 
-This code base draws from the NLP courses taught by Andrej Karpathy. His github can be found at https://github.com/karpathy/nn-zero-to-hero. You are free to use
-his resources and incorporate his ideas. However, as discussed earlier, all training must be done by you.
+The codebase is inspired by Andrej Karpathy’s NLP courses (nn-zero-to-hero). All training and fine-tuning were performed from scratch, adhering to project constraints. Additional resources include the transformers library for GPT2 tokenization and rouge-score for evaluation.
 
