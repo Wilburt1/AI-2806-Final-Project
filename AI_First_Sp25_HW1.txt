@@ -1,0 +1,192 @@
+GEORGIA INSTITUTE OF TECHNOLOGY
+SCHOOL of ELECTRICAL and COMPUTER ENGINEERING
+
+ECE 2806 AI First
+Spring 2025
+Problem Set #1
+Assigned: 16 Jan 25
+Due Date: 23 Jan 25
+The web site for the course uses Canvas: https://canvas.gatech.edu
+The login for Canvas is your GT login.
+⇒ Please check Canvas and PIAZZA daily. All official course announcements will be posted on
+PIAZZA.
+Turn in all STARRED problems.
+After this assignment is handed in by everyone, solutions will be posted to Canvas.
+Homework submission: see posted instructions.
+Instructions:
+• Your homework is due on January 23, 2025 at midnight. After that, the HW is
+considered LATE and could receive a grade zero.
+• ONLY the STARRED problems should be turned in for grading.
+• Scan and upload a single PDF document into Gradescope
+• Helpful links for using Gradescope are below:
+https://gradescope-static-assets.s3-us-west-2.amazonaws.com/help/submitting_hw_
+guide.pdf
+https://www.gradescope.com/get_started#student-submission
+• If you have a device with digital inking ability that can store files as PDFs, you may use that
+instead of scanning a paper copy of your assignment.
+• Write your name on the top of each page.
+• Write clearly and legibly separating the work and answers for each problem.
+Reading:
+• Read the following materials for this week’s homework:
+– Linear Algebra in 4 Pages
+– Probability Basics
+• These materials can be found by clicking the above links or by navigating to the Notes section
+of the course content page.
+
+PROBLEM 1.1*:
+Compute the eigenvectors and eigenvalues of the following matrices. Eigenvectors must be normalized to a unit vector. Show all intermediate steps to receive full credit:
+
+
+
+−5 2
+(a)
+−7 4
+
+
+1 2
+(b)
+5 4
+
+
+1 2 7
+(c) 0 4 1
+0 0 2
+
+PROBLEM 1.2:
+
+
+Suppose you are given an arbitrary 1-dimensional column array with n elements A = a0 a1 a2 ... an−1 .
+Answer the following questions:
+(a) Write a python function to find and return the maximum element in this array.
+(b) What is the maximum number of times that the array may need to be accessed when running
+the function in part (a)? (An array access is defined as an attempt by your code to retrieve
+a value at a specific index position of the array.)
+(c) Write a python function to search for a specific element called target and return the index
+(position in the array) of this element.
+(d) What is the maximum number of times that the array may need to be accessed when running
+the function in part (c)?
+(e) Lets assume we start with the knowledge that the array is sorted in ascending order? How
+does this change the answers for part b) and d).
+
+PROBLEM 1.3*:
+Suppose that you have two 6 sided dice. Answer the following questions:
+(a) What is the probability that the sum of the two dice is 9?
+(b) If the first die produces a prime number, what is the probability that the sum of the two dice
+will be 9?
+
+PROBLEM 1.4:
+For each of the following sets, calculate the entropy value. Show your work.
+(a) A set of two events A and B with probabilities: P (A) = 0.9 and P (B) = 0.1, respectively.
+(b) There is a set of 5 elements. What set of probabilities will result in the set having the highest
+entropy?
+(c) There is a set of 5 elements. What set of probabilities will result in the set having the lowest
+entropy possible?
+(d) A set of three events with equal probability.
+
+PROBLEM 1.5*:
+Given a set of five elements, A, B, C, D,and E with the following probabilities: 0.3, 0.3, 0.2, 0.1,
+and 0.1, respectively, answer the following and show yur work.
+(a) Calculate the entropy.
+(b) Calculate the entropy of the reduced set after removing event C from the set.
+
+PROBLEM 1.6*:
+Consider two independent events X and Y with the following probabilities: P (X = 0) = 0.2,
+P (X = 1) = 0.8 and P (Y = 0) = 0.4, P (Y = 1) = 0.6.
+(a) Calculate the joint entropy, E(X, Y ). note: recall that probability of the joint of two independent random variable is the multiplication of the two individual probabilities.
+(b) Calculate the conditional entropy, E(X/Y ).
+
+PROBLEM 1.7*:
+In this problem, we will construct a decision tree that predicts whether the Baltimore Orioles will
+win the World Series (Y) or not (N) based on the factors of Spending (High, Medium, or Low) and
+whether their top pitcher gets hurt (True or False).
+Spending
+L
+L
+M
+M
+H
+H
+
+Hurt
+F
+T
+F
+T
+F
+T
+
+World Series Win
+Y
+N
+Y
+Y
+Y
+Y
+
+For this problem, you can write your answers using log2 , but it may be helpful to note that
+log2 3 ≈ 1.6.
+(a) Calculate the entropy value, E(W orldSeriesW in).
+(b) Draw the constructed decision tree.
+
+PROBLEM 1.8*:
+Apply Dijkstra’s algorithm to the graph shown in Figure 1. Then, find the shortest path, and its
+cost, from the source node s to node t. Show your work in detail.
+
+PROBLEM 1.9:
+Consider the 4 x 8, 8-bit image given as follows:
+21
+21
+21
+21
+
+21
+21
+21
+21
+
+Calculate the entropy of the image.
+
+21
+21
+21
+21
+
+95
+95
+95
+95
+
+169
+169
+169
+169
+
+243
+243
+243
+243
+
+243
+243
+243
+243
+
+243
+243
+243
+243
+
+Figure 1: A weighted undirected graph.
+
+Figure 2: This is a decision tree for the task of predicting whether you will receive a loan or not
+based on the features of credit score and income.
+
+PROBLEM 1.10:
+Suppose we have the decision tree shown in Figure 2. Perform the following actions:
+(a) Convert the decision tree into a table that shows how each possible state maps to the final
+action of receiving a loan or not. This table should be similar to the table in Problem 1.7.
+(b) Note that it may not matter what the income is for certain rows of the table. Why is this
+the case?
+(c) Compute the information gain of the credit score node.
+
+

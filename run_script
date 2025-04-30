@@ -1,0 +1,5 @@
+#!/bin/bash
+
+python3 training_tokenizer1.py --training_file './train_data/shakespeare.txt' --training_file_tokenizer './train_data/shakespeare.txt' --max_iters 1000 --tokenization_strategy 'BPE' --target_vocab_size 400 --save_file './models/model_shakespeare_1000.pth'
+python3 training_tokenizer1.py --training_file './train_data/shakespeare.txt' --training_file_tokenizer './train_data/shakespeare.txt' --max_iters 3000 --tokenization_strategy 'BPE' --target_vocab_size 400 --save_file './models/model_shakespeare_3000.pth'
+python3 training_tokenizer1.py --training_file './train_data/shakespeare.txt' --training_file_tokenizer './train_data/shakespeare.txt' --max_iters 5000 --tokenization_strategy 'BPE' --target_vocab_size 400 --save_file './models/model_shakespeare_5000.pth'
